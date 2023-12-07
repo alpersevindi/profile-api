@@ -8,6 +8,10 @@ require (
 )
 
 require (
+	github.com/aws/aws-sdk-go v1.48.15 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.26.5 // indirect
+	github.com/aws/smithy-go v1.19.0 // indirect
+	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
