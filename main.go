@@ -9,7 +9,6 @@ import (
 
 func main() {
 	e := echo.New()
-
 	database.InitDynamoDB()
 	routers.InitRoutes(e)
 	e.Logger.Fatal(e.Start(":8080"))

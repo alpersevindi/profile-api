@@ -1,4 +1,3 @@
-// database/dynamodb.go
 package database
 
 import (
