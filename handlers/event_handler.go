@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 	"profile-api/database"
 	"profile-api/models"
@@ -62,6 +63,33 @@ func CreateEvent(c echo.Context) error {
 	var updatedUser models.User
 	err = dynamodbattribute.UnmarshalMap(result.Attributes, &updatedUser)
 	if err != nil {
+		return err
+	}
+
+	conn, err := database.GetClickHouseConnection()
+	if err != nil {
+		return err
+	}
+
+	defer conn.Close()
+
+	batch, err := conn.PrepareBatch(context.Background(), "INSERT INTO user_events (id, type, user_id, price, timestamp) VALUES (?, ?, ?, ?, ?)")
+	if err != nil {
+		return err
+	}
+
+	err = batch.Append(
+		event.ID,
+		event.Type,
+		userID,
+		event.Product.Price,
+		event.Timestamp,
+	)
+	if err != nil {
+		return err
+	}
+
+	if err := batch.Send(); err != nil {
 		return err
 	}
 

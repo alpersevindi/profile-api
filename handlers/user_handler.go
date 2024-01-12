@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 	"profile-api/database"
 	"profile-api/models"
@@ -76,6 +77,31 @@ func CreateUser(c echo.Context) error {
 
 	_, err = database.DynamoDBClient.PutItem(input)
 	if err != nil {
+		return err
+	}
+
+	conn, err := database.GetClickHouseConnection()
+	if err != nil {
+		return err
+	}
+
+	defer conn.Close()
+
+	batch, err := conn.PrepareBatch(context.Background(), "INSERT INTO users (id, name, surname) VALUES (?, ?, ?)")
+	if err != nil {
+		return err
+	}
+
+	err = batch.Append(
+		user.ID,
+		user.Name,
+		user.Surname,
+	)
+	if err != nil {
+		return err
+	}
+
+	if err := batch.Send(); err != nil {
 		return err
 	}
 
