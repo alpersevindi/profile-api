@@ -7,6 +7,7 @@ COPY . .
 RUN go get -u github.com/labstack/echo/v4
 RUN go get -u github.com/aws/aws-sdk-go
 RUN go get -u github.com/google/uuid
+RUN go get -u github.com/ClickHouse/clickhouse-go/v2
 
 RUN go build -o main .
 

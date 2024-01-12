@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/ClickHouse/clickhouse-go/v2"
+	"github.com/ClickHouse/clickhouse-go/v2/lib/driver"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -26,4 +28,16 @@ func InitDynamoDB() {
 	}
 
 	DynamoDBClient = dynamodb.New(sess)
+}
+
+func GetClickHouseConnection() (driver.Conn, error) {
+	conn, err := clickhouse.Open(&clickhouse.Options{
+		Addr: []string{"127.0.0.1:9000"},
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	return conn, nil
 }
