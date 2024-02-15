@@ -1,1 +1,6 @@
 gin-bin
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/profile-api.iml
+.idea/vcs.xml

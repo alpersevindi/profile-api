@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/ClickHouse/clickhouse-go/v2"
@@ -23,7 +22,6 @@ func InitDynamoDB() {
 	})
 
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 

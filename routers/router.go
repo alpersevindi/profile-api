@@ -14,4 +14,6 @@ func InitRoutes(e *echo.Echo) {
 	e.DELETE("/users/:id", handlers.DeleteUser)
 
 	e.POST("/users/:id/events", handlers.CreateEvent)
+
+	e.GET("/statistics", handlers.GetStatisticsBetweenRange)
 }
