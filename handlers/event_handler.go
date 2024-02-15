@@ -12,9 +12,27 @@ import (
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/google/uuid"
 	"github.com/labstack/echo/v4"
+	"github.com/segmentio/kafka-go"
 )
 
 func CreateEvent(c echo.Context) error {
+	writer := kafka.NewWriter(kafka.WriterConfig{
+		Brokers:  []string{"localhost:9092"},
+		Topic:    "traffic-events",
+		Balancer: &kafka.LeastBytes{},
+	})
+
+	err := writer.WriteMessages(context.Background(),
+		kafka.Message{
+			Value: []byte("Sample traffic event"),
+		},
+	)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, "Error writing message to Kafka")
+	}
+
+	writer.Close()
+
 	userID := c.Param("id")
 	var event models.Event
 	if err := c.Bind(&event); err != nil {
