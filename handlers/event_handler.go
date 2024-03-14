@@ -103,7 +103,7 @@ func CreateEvent(c echo.Context) error {
 
 	s3result, err := s3Client.PutObject(&s3.PutObjectInput{
 		Bucket: aws.String("profile-api-event-bucket"),
-		Key:    aws.String("vbTbRF+PdxG6SiF8X3auk0sQAS4sPlRD4TnyYMem"),
+		Key:    aws.String(""),
 		Body:   bytes.NewReader(msg),
 	})
 	if err != nil {
