@@ -11,9 +11,10 @@ require (
 	github.com/ClickHouse/ch-go v0.61.0 // indirect
 	github.com/ClickHouse/clickhouse-go/v2 v2.16.0 // indirect
 	github.com/andybalholm/brotli v1.0.6 // indirect
-	github.com/aws/aws-sdk-go v1.48.15 // indirect
+	github.com/aws/aws-sdk-go v1.50.38 // indirect
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.26.5 // indirect
 	github.com/aws/smithy-go v1.19.0 // indirect
+	github.com/confluentinc/confluent-kafka-go v1.9.2 // indirect
 	github.com/go-faster/city v1.0.1 // indirect
 	github.com/go-faster/errors v0.7.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
@@ -34,5 +35,6 @@ require (
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
+	gopkg.in/confluentinc/confluent-kafka-go.v1 v1.8.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
