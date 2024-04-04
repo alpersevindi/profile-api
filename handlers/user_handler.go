@@ -155,7 +155,7 @@ func DeleteUser(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent)
 }
 
-func GetUserByAttribute(c echo.Context) error {
+func GetUsersByAttribute(c echo.Context) error {
 	attribute := c.QueryParam("attribute")
 
 	exprAttrValues := map[string]*dynamodb.AttributeValue{
@@ -190,7 +190,7 @@ func GetUserByAttribute(c echo.Context) error {
 	return c.JSON(http.StatusOK, users)
 }
 
-func GetUserByeEvent(c echo.Context) error {
+func GetUsersByEvent(c echo.Context) error {
 	eventValue := c.QueryParam("event")
 
 	exprAttrValues := map[string]*dynamodb.AttributeValue{

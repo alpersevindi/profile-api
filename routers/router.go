@@ -12,6 +12,8 @@ func InitRoutes(e *echo.Echo) {
 	e.POST("/users", handlers.CreateUser)
 	e.PUT("/users/:id", handlers.UpdateUser)
 	e.DELETE("/users/:id", handlers.DeleteUser)
+	e.GET("/users/:attribute", handlers.GetUsersByAttribute)
+	e.GET("/users/:event", handlers.GetUsersByEvent)
 
 	e.POST("/users/:id/events", handlers.CreateEvent)
 
