@@ -154,3 +154,72 @@ func DeleteUser(c echo.Context) error {
 
 	return c.NoContent(http.StatusNoContent)
 }
+
+func GetUsersByAttribute(c echo.Context) error {
+	attribute := c.QueryParam("attribute")
+
+	exprAttrValues := map[string]*dynamodb.AttributeValue{
+		":val": {
+			S: aws.String(attribute),
+		},
+	}
+
+	expression := "name = :val"
+
+	input := &dynamodb.QueryInput{
+		TableName:                 aws.String("Users"),
+		KeyConditionExpression:    aws.String(expression),
+		ExpressionAttributeValues: exprAttrValues,
+	}
+
+	result, err := database.DynamoDBClient.Query(input)
+	if err != nil {
+		return err
+	}
+
+	var users []models.User
+
+	for _, item := range result.Items {
+		var user models.User
+		if err := dynamodbattribute.UnmarshalMap(item, &user); err != nil {
+			return err
+		}
+		users = append(users, user)
+	}
+
+	return c.JSON(http.StatusOK, users)
+}
+
+func GetUsersByEvent(c echo.Context) error {
+	eventValue := c.QueryParam("event")
+
+	exprAttrValues := map[string]*dynamodb.AttributeValue{
+		":val": {
+			S: aws.String(eventValue),
+		},
+	}
+
+	expression := "event = :val"
+
+	input := &dynamodb.QueryInput{
+		TableName:                 aws.String("Users"),
+		IndexName:                 aws.String("EventIndex"),
+		KeyConditionExpression:    aws.String(expression),
+		ExpressionAttributeValues: exprAttrValues,
+		ProjectionExpression:      aws.String("ID"),
+	}
+
+	result, err := database.DynamoDBClient.Query(input)
+	if err != nil {
+		return err
+	}
+
+	var userIDs []string
+
+	for _, item := range result.Items {
+		userID := aws.StringValue(item["ID"].S)
+		userIDs = append(userIDs, userID)
+	}
+
+	return c.JSON(http.StatusOK, userIDs)
+}
